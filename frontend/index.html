@@ -1,0 +1,946 @@
+<!-- Main HTML file -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnlaceRB - Intranet Corporativa</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-rb-blue-main text-white flex flex-col no-scrollbar">
+            <div class="p-4 border-b border-blue-500">
+                <h1 class="text-2xl font-bold text-center">EnlaceRB</h1>
+            </div>
+            <nav class="flex-1 p-2 space-y-2">
+                <a href="#" data-view="dashboard-view"
+                    class="sidebar-link flex items-center p-3 rounded-lg hover:bg-rb-cyan/80 transition-colors duration-200">
+                    <span class="material-symbols-outlined mr-3">dashboard</span> Panel Principal
+                </a>
+                <div id="hr-menu">
+                    <a href="#" data-view="hr-view"
+                        class="sidebar-link flex items-center p-3 rounded-lg hover:bg-rb-cyan/80 transition-colors duration-200">
+                        <span class="material-symbols-outlined mr-3">groups</span> RRHH
+                    </a>
+                </div>
+                <div id="docs-menu">
+                    <a href="#" data-view="docs-view"
+                        class="sidebar-link flex items-center p-3 rounded-lg hover:bg-rb-cyan/80 transition-colors duration-200">
+                        <span class="material-symbols-outlined mr-3">folder_managed</span> Gestión Documental
+                    </a>
+                </div>
+                <div id="indicators-menu">
+                    <a href="#" data-view="indicators-view"
+                        class="sidebar-link flex items-center p-3 rounded-lg hover:bg-rb-cyan/80 transition-colors duration-200">
+                        <span class="material-symbols-outlined mr-3">monitoring</span> Mis Indicadores
+                    </a>
+                </div>
+                <div id="admin-menu" class="hidden">
+                    <a href="#" data-view="admin-view"
+                        class="sidebar-link flex items-center p-3 rounded-lg bg-rb-orange/80 hover:bg-rb-orange transition-colors duration-200">
+                        <span class="material-symbols-outlined mr-3">admin_panel_settings</span> Administrador
+                    </a>
+                </div>
+            </nav>
+            <div class="p-4 border-t border-blue-500">
+                <div class="flex flex-col items-center mb-4">
+                    <img id="user-photo-sidebar" src="https://placehold.co/80x80/00a9ce/ffffff?text=U"
+                        alt="Foto de perfil" class="w-20 h-20 rounded-full object-cover border-2 border-rb-cyan mb-2">
+                    <p id="user-name-sidebar" class="font-semibold text-lg text-center">Usuario de Prueba</p>
+                    <p id="user-role-sidebar" class="text-sm text-rb-cyan">Auxiliar</p>
+                </div>
+                <div>
+                    <label for="user-role-selector" class="block text-sm font-medium text-gray-300 mb-1">Simular
+                        Rol:</label>
+                    <select id="user-role-selector"
+                        class="w-full p-2 bg-blue-900 border-blue-700 rounded-md text-white text-sm">
+                        <option value="Auxiliar">Auxiliar</option>
+                        <option value="Analista">Analista</option>
+                        <option value="Senior">Senior</option>
+                        <option value="Coordinador">Coordinador</option>
+                        <option value="Gerente">Gerente</option>
+                        <option value="Socio">Socio</option>
+                    </select>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-8 overflow-y-auto">
+
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="app-view">
+                <!-- Dashboard Header -->
+                <header class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 id="welcome-message" class="text-2xl font-bold text-rb-blue-main">Bienvenido, Usuario de
+                            Prueba</h2>
+                        <p class="text-gray-500">Aquí tienes un resumen de tu día.</p>
+                    </div>
+                    <div class="relative">
+                        <button id="notifications-btn" class="relative text-gray-500 hover:text-rb-blue-main">
+                            <span class="material-symbols-outlined text-3xl">notifications</span>
+                            <span
+                                class="absolute top-0 right-0 h-3 w-3 bg-red-500 rounded-full border-2 border-gray-100"></span>
+                        </button>
+                        <!-- Notifications Dropdown -->
+                        <div id="notifications-dropdown"
+                            class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-20 hidden">
+                            <div class="p-4 font-bold text-gray-800 border-b">Notificaciones</div>
+                            <div class="divide-y">
+                                <a href="#" class="flex items-start p-4 hover:bg-gray-50">
+                                    <div class="flex-shrink-0 mr-4">
+                                        <div
+                                            class="h-10 w-10 rounded-full bg-rb-cyan text-white flex items-center justify-center">
+                                            <span class="material-symbols-outlined">flight_takeoff</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-800">Tu solicitud de vacaciones para Agosto ha sido
+                                            <strong>aprobada</strong>.
+                                        </p>
+                                        <p class="text-xs text-gray-500 mt-1">hace 1 hora</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="flex items-start p-4 hover:bg-gray-50">
+                                    <div class="flex-shrink-0 mr-4">
+                                        <div
+                                            class="h-10 w-10 rounded-full bg-rb-teal text-white flex items-center justify-center">
+                                            <span class="material-symbols-outlined">grade</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-800">Tienes una nueva <strong>evaluación de
+                                                desempeño</strong> pendiente.</p>
+                                        <p class="text-xs text-gray-500 mt-1">hace 3 horas</p>
+                                    </div>
+                                </a>
+                                <a href="#"
+                                    class="block p-4 text-center text-sm font-medium text-rb-blue-main hover:bg-gray-50">Ver
+                                    todas las notificaciones</a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Main Content Column -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Interactive Announcements Carousel -->
+                        <section>
+                            <div id="announcements-carousel" class="carousel-container bg-white rounded-lg shadow-md">
+                                <!-- Slides -->
+                                <div class="carousel-slide active">
+                                    <div class="bg-white rounded-lg overflow-hidden">
+                                        <img src="https://placehold.co/800x400/00a9ce/ffffff?text=Nuevo+Cliente"
+                                            alt="Nuevo cliente" class="w-full h-64 object-cover">
+                                        <div class="p-6">
+                                            <h3 class="font-bold text-xl text-gray-800">¡Damos la bienvenida a un nuevo
+                                                cliente estratégico!</h3>
+                                            <p class="text-gray-600 mt-2">Estamos emocionados de anunciar nuestra nueva
+                                                alianza con TechCorp, líder en innovación. Este acuerdo fortalecerá
+                                                nuestra posición en el mercado y abrirá nuevas oportunidades de
+                                                crecimiento.</p>
+                                            <a href="#" class="text-rb-blue-main font-semibold mt-4 inline-block">Leer
+                                                más &rarr;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-slide">
+                                    <div class="bg-white rounded-lg overflow-hidden">
+                                        <img src="https://placehold.co/800x400/981d97/ffffff?text=Logros+Q2"
+                                            alt="Logros del trimestre" class="w-full h-64 object-cover">
+                                        <div class="p-6">
+                                            <h3 class="font-bold text-xl text-gray-800">Celebramos los logros del
+                                                segundo trimestre</h3>
+                                            <p class="text-gray-600 mt-2">El equipo de BPO ha superado las metas de
+                                                rendimiento en un 15%, y el departamento Legal cerró con éxito tres
+                                                casos importantes. ¡Felicitaciones a todos los involucrados por su arduo
+                                                trabajo!</p>
+                                            <a href="#" class="text-rb-blue-main font-semibold mt-4 inline-block">Ver
+                                                reporte &rarr;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-slide">
+                                    <div class="bg-white rounded-lg overflow-hidden">
+                                        <img src="https://placehold.co/800x400/ed8b00/ffffff?text=Evento+de+Fin+de+Año"
+                                            alt="Evento de fin de año" class="w-full h-64 object-cover">
+                                        <div class="p-6">
+                                            <h3 class="font-bold text-xl text-gray-800">¡Prepárate para nuestro Evento
+                                                de Fin de Año!</h3>
+                                            <p class="text-gray-600 mt-2">Marquen sus calendarios para el 15 de
+                                                diciembre. Tendremos una noche de celebración, premios y sorpresas. ¡No
+                                                te lo puedes perder! Más detalles próximamente.</p>
+                                            <a href="#"
+                                                class="text-rb-blue-main font-semibold mt-4 inline-block">Confirmar
+                                                asistencia &rarr;</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Navigation -->
+                                <button id="carousel-prev"
+                                    class="absolute top-1/2 left-4 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md z-10">
+                                    <span class="material-symbols-outlined">chevron_left</span>
+                                </button>
+                                <button id="carousel-next"
+                                    class="absolute top-1/2 right-4 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 shadow-md z-10">
+                                    <span class="material-symbols-outlined">chevron_right</span>
+                                </button>
+                                <!-- Dots -->
+                                <div id="carousel-dots"
+                                    class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2"></div>
+                            </div>
+                        </section>
+
+                        <!-- Multimedia Content -->
+                        <section>
+                            <h2 class="text-2xl font-bold text-rb-blue-main mb-4">Galería de Eventos Recientes</h2>
+                            <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                                <div class="gallery-item cursor-pointer overflow-hidden rounded-lg shadow-md">
+                                    <img src="https://placehold.co/400x400/00bfb3/ffffff?text=Evento+1"
+                                        alt="Foto del evento de fin de año 1" class="w-full h-full object-cover">
+                                </div>
+                                <div class="gallery-item cursor-pointer overflow-hidden rounded-lg shadow-md">
+                                    <img src="https://placehold.co/400x400/ed8b00/ffffff?text=Evento+2"
+                                        alt="Foto del evento de fin de año 2" class="w-full h-full object-cover">
+                                </div>
+                                <div class="gallery-item cursor-pointer overflow-hidden rounded-lg shadow-md">
+                                    <img src="https://placehold.co/400x400/001871/ffffff?text=Evento+3"
+                                        alt="Foto del evento de fin de año 3" class="w-full h-full object-cover">
+                                </div>
+                                <div class="gallery-item cursor-pointer overflow-hidden rounded-lg shadow-md">
+                                    <img src="https://placehold.co/400x400/00a9ce/ffffff?text=Evento+4"
+                                        alt="Foto del evento de fin de año 4" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Sidebar Column -->
+                    <div class="space-y-8">
+                        <!-- CEO's Blog -->
+                        <section class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Blog del CEO</h3>
+                            <div class="flex items-start space-x-4">
+                                <img src="https://placehold.co/100x100/cccccc/333333?text=CEO" alt="Foto del CEO"
+                                    class="w-16 h-16 rounded-full object-cover flex-shrink-0">
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Visión 2025: Nuestro Camino Hacia el Futuro</h4>
+                                    <p class="text-sm text-gray-600 mt-1">"En este nuevo año, nuestro enfoque estará en
+                                        la innovación y el talento humano..."</p>
+                                    <a href="#" class="text-rb-blue-main font-semibold text-sm mt-2 inline-block">Seguir
+                                        leyendo...</a>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Digital Bulletin Board -->
+                        <section class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Tablón de Anuncios</h3>
+                            <div class="space-y-3">
+                                <div class="bg-yellow-100 p-3 rounded-md text-sm">
+                                    <strong class="text-yellow-800">Clasificados:</strong> Vendo silla de oficina
+                                    ergonómica, casi nueva. Contactar a Juan Pérez ext. 123.
+                                </div>
+                                <div class="bg-green-100 p-3 rounded-md text-sm">
+                                    <strong class="text-green-800">Social:</strong> ¡Te invitamos al campeonato de bolos
+                                    este sábado! Inscríbete con RRHH.
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Quick Access -->
+                        <section class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Acceso Rápido</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <button data-view-target="hr-update-data-view"
+                                    class="quick-access-btn flex flex-col items-center p-3 bg-gray-50 hover:bg-rb-cyan/10 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined text-2xl text-rb-cyan">person</span>
+                                    <span class="mt-1 text-xs text-center">Actualizar Datos</span>
+                                </button>
+                                <button data-view-target="hr-vacancy-request-view"
+                                    class="quick-access-btn flex flex-col items-center p-3 bg-gray-50 hover:bg-rb-orange/10 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined text-2xl text-rb-orange">work</span>
+                                    <span class="mt-1 text-xs text-center">Solicitar Vacante</span>
+                                </button>
+                                <button data-view-target="docs-upload-view"
+                                    class="quick-access-btn flex flex-col items-center p-3 bg-gray-50 hover:bg-rb-purple/10 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined text-2xl text-rb-purple">upload_file</span>
+                                    <span class="mt-1 text-xs text-center">Cargar Documento</span>
+                                </button>
+                                <button data-view-target="hr-performance-evaluation-view"
+                                    class="quick-access-btn flex flex-col items-center p-3 bg-gray-50 hover:bg-rb-teal/10 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined text-2xl text-rb-teal">grade</span>
+                                    <span class="mt-1 text-xs text-center">Evaluar Desempeño</span>
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- Calendar -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div id="calendar-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HR Management View -->
+            <div id="hr-view" class="app-view hidden">
+                <div class="flex flex-col md:flex-row">
+                    <!-- HR Sub-menu -->
+                    <aside class="w-full md:w-64 md:mr-8 mb-6 md:mb-0 bg-white p-4 rounded-lg shadow-md flex-shrink-0">
+                        <h3 class="text-lg font-bold text-rb-blue-main mb-4 border-b pb-2">Gestión de RRHH</h3>
+                        <nav id="hr-sub-menu-nav" class="space-y-4">
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Mi Perfil
+                                </h4>
+                                <a href="#" data-subview="hr-update-data-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Actualización de
+                                    Datos</a>
+                                <a href="#" data-subview="hr-vacations-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Vacaciones y
+                                    Licencias</a>
+                            </div>
+                            <div class="hr-management-section">
+                                <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Gestión
+                                </h4>
+                                <a href="#" data-subview="hr-employee-management-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Gestión de
+                                    Empleados</a>
+                                <a href="#" data-subview="hr-attendance-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Control de
+                                    Asistencia</a>
+                                <a href="#" data-subview="hr-payroll-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Gestión de
+                                    Nómina</a>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Desarrollo
+                                </h4>
+                                <a href="#" data-subview="hr-recruitment-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Reclutamiento y
+                                    Selección</a>
+                                <a href="#" data-subview="hr-performance-evaluation-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Evaluación de
+                                    Desempeño</a>
+                                <a href="#" data-subview="hr-training-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Capacitación y
+                                    Desarrollo</a>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Cultura
+                                </h4>
+                                <a href="#" data-subview="hr-wellbeing-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Bienestar y
+                                    Clima</a>
+                                <a href="#" data-subview="hr-communications-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Comunicaciones
+                                    Internas</a>
+                            </div>
+                            <div class="hr-admin-section">
+                                <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                                    Administración</h4>
+                                <a href="#" data-subview="hr-reports-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Reportes y
+                                    Analítica</a>
+                                <a href="#" data-subview="hr-termination-view"
+                                    class="hr-sub-link block p-2 rounded-md hover:bg-gray-100 text-sm">Terminación de
+                                    Personal</a>
+                            </div>
+                        </nav>
+                    </aside>
+
+                    <!-- HR Content -->
+                    <div class="flex-1">
+                        <div id="hr-update-data-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Actualización de Datos Personales</h2>
+                            <form class="space-y-4">
+                                <h3 class="font-semibold text-gray-600 border-b pb-2">Información Personal</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div><label class="block text-sm">Nombres</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md" value="Usuario"></div>
+                                    <div><label class="block text-sm">Apellidos</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md" value="de Prueba"></div>
+                                    <div><label class="block text-sm">Dirección</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md"></div>
+                                    <div><label class="block text-sm">Teléfono</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md"></div>
+                                </div>
+                                <h3 class="font-semibold text-gray-600 border-b pb-2 pt-4">Contacto de Emergencia</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div><label class="block text-sm">Nombre Completo</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md"></div>
+                                    <div><label class="block text-sm">Teléfono</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md"></div>
+                                </div>
+                                <button type="submit"
+                                    class="mt-4 px-6 py-2 bg-rb-blue-main text-white rounded-md hover:bg-rb-cyan">Actualizar</button>
+                            </form>
+                        </div>
+
+                        <div id="hr-vacancy-request-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Solicitud de Vacantes</h2>
+                            <form id="vacancy-form" class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div><label class="block text-sm">Gerente Solicitante</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md"></div>
+                                    <div><label class="block text-sm">Área/Departamento</label><select
+                                            class="mt-1 w-full p-2 border rounded-md">
+                                            <option>Administrativo</option>
+                                            <option>Contabilidad</option>
+                                            <option>Impuestos</option>
+                                            <option>Revisoría Fiscal</option>
+                                            <option>Legal</option>
+                                            <option>BPO</option>
+                                        </select></div>
+                                    <div><label class="block text-sm">Nombre del Puesto</label><input id="vacancy-title"
+                                            type="text" class="mt-1 w-full p-2 border rounded-md"></div>
+                                    <div><label class="block text-sm">Tipo de Contrato</label><select
+                                            class="mt-1 w-full p-2 border rounded-md">
+                                            <option>Término Indefinido</option>
+                                            <option>Término Fijo</option>
+                                            <option>Obra o Labor</option>
+                                        </select></div>
+                                    <div><label class="block text-sm">Presupuesto Salarial (COP)</label><input
+                                            type="number" class="mt-1 w-full p-2 border rounded-md"></div>
+                                    <div><label class="block text-sm">Nivel Mínimo de Educación</label><input
+                                            type="text" class="mt-1 w-full p-2 border rounded-md"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm">Justificación y Responsabilidades</label>
+                                    <textarea id="vacancy-description" rows="6"
+                                        class="mt-1 w-full p-2 border rounded-md"></textarea>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-rb-blue-main text-white rounded-md hover:bg-rb-cyan">Enviar
+                                        Solicitud</button>
+                                    <button id="generate-description-btn" type="button"
+                                        class="flex items-center px-6 py-2 bg-rb-orange text-white rounded-md hover:bg-rb-orange/80">
+                                        <span class="material-symbols-outlined mr-2">auto_awesome</span>
+                                        <span class="btn-text">Generar con IA</span>
+                                        <div
+                                            class="loader hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white">
+                                        </div>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="hr-employee-management-view"
+                            class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Gestión de Empleados</h2>
+                            <div class="mb-6">
+                                <h3 class="font-semibold text-gray-700 mb-2">Lista de Empleados</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm text-left">
+                                        <thead class="bg-gray-50 text-gray-600">
+                                            <tr>
+                                                <th class="p-2">Nombre</th>
+                                                <th class="p-2">Cargo</th>
+                                                <th class="p-2">Departamento</th>
+                                                <th class="p-2">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b">
+                                                <td class="p-2">Ana García</td>
+                                                <td class="p-2">Gerente</td>
+                                                <td class="p-2">Contabilidad</td>
+                                                <td class="p-2"><button
+                                                        class="text-rb-blue-main hover:underline text-sm">Ver
+                                                        Ficha</button></td>
+                                            </tr>
+                                            <tr class="border-b">
+                                                <td class="p-2">Carlos Rodriguez</td>
+                                                <td class="p-2">Analista</td>
+                                                <td class="p-2">Impuestos</td>
+                                                <td class="p-2"><button
+                                                        class="text-rb-blue-main hover:underline text-sm">Ver
+                                                        Ficha</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-700 mb-2">Organigrama Dinámico</h3>
+                                <div class="org-chart overflow-x-auto p-4 bg-gray-50 rounded-lg">
+                                    <ul>
+                                        <li>
+                                            <div class="node"><strong>Carlos Soto</strong><br><small>Socio</small></div>
+                                            <ul>
+                                                <li>
+                                                    <div class="node"><strong>Ana García</strong><br><small>Gerente
+                                                            Contabilidad</small></div>
+                                                    <ul>
+                                                        <li>
+                                                            <div class="node"><strong>Luis
+                                                                    Peña</strong><br><small>Coordinador</small></div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="node"><strong>Maria
+                                                                    Solano</strong><br><small>Senior</small></div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <div class="node"><strong>Pedro Pascal</strong><br><small>Gerente
+                                                            Legal</small></div>
+                                                    <ul>
+                                                        <li>
+                                                            <div class="node"><strong>Sofia
+                                                                    Vergara</strong><br><small>Senior</small></div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-attendance-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Control de Asistencia y Horarios</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="text-center p-4 border rounded-lg">
+                                    <h3 class="font-semibold text-gray-700">Mi Registro de Hoy</h3>
+                                    <p class="text-4xl font-bold text-rb-teal my-4">08:05 AM</p>
+                                    <button
+                                        class="w-full px-6 py-2 bg-rb-orange text-white rounded-md hover:bg-rb-orange/90">Registrar
+                                        Salida</button>
+                                </div>
+                                <div class="text-center p-4 border rounded-lg">
+                                    <h3 class="font-semibold text-gray-700">Horario Asignado</h3>
+                                    <p class="text-2xl font-bold text-gray-800 my-4">L-V: 8:00 AM - 5:30 PM</p>
+                                    <p class="text-sm text-gray-500">Horario flexible</p>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <h3 class="font-semibold text-gray-700 mb-2">Reporte de Ausencias y Retardos (Últimos 30
+                                    días)</h3>
+                                <p class="text-sm text-gray-600">No se registran ausencias ni retardos.</p>
+                            </div>
+                        </div>
+
+                        <div id="hr-payroll-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Gestión de Nómina</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">Generar Desprendibles de Pago</h3>
+                                    <p class="text-sm text-gray-500 mb-2">Seleccione un período para ver su
+                                        desprendible.</p>
+                                    <div class="flex items-center space-x-2">
+                                        <select class="p-2 border rounded-md">
+                                            <option>Junio 2024</option>
+                                            <option>Mayo 2024</option>
+                                        </select>
+                                        <button class="px-4 py-2 bg-rb-cyan text-white rounded-md">Ver
+                                            Desprendible</button>
+                                    </div>
+                                </div>
+                                <div class="pt-4 border-t">
+                                    <h3 class="font-semibold text-gray-700">Cálculo y Reportes (Admin)</h3>
+                                    <p class="text-sm text-gray-500 mb-2">Herramientas para el cálculo de nómina y
+                                        generación de reportes legales.</p>
+                                    <div class="flex space-x-2">
+                                        <button class="px-4 py-2 bg-rb-blue-main text-white rounded-md">Calcular
+                                            Nómina</button>
+                                        <button class="px-4 py-2 bg-rb-teal text-white rounded-md">Reportes
+                                            Tributarios</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-vacations-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Gestión de Vacaciones y Licencias</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="p-4 border rounded-lg">
+                                    <h3 class="font-semibold text-gray-700 mb-2">Mis Días Disponibles</h3>
+                                    <p class="text-4xl font-bold text-rb-cyan">12 <span class="text-lg">días</span></p>
+                                </div>
+                                <div class="p-4 border rounded-lg">
+                                    <h3 class="font-semibold text-gray-700 mb-2">Solicitar Ausencia</h3>
+                                    <form class="space-y-2">
+                                        <div><label class="text-sm">Fecha de Inicio</label><input type="date"
+                                                class="mt-1 w-full p-1 border rounded-md text-sm"></div>
+                                        <div><label class="text-sm">Fecha Fin</label><input type="date"
+                                                class="mt-1 w-full p-1 border rounded-md text-sm"></div>
+                                        <button
+                                            class="w-full mt-2 px-4 py-2 bg-rb-blue-main text-white rounded-md text-sm">Enviar
+                                            Solicitud</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-training-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Capacitación y Desarrollo</h2>
+                            <h3 class="font-semibold text-gray-700 mb-2">Mis Cursos Completados</h3>
+                            <p class="text-sm text-gray-500 mb-4">No hay cursos completados aún.</p>
+                            <h3 class="font-semibold text-gray-700 mb-2">Catálogo de Cursos</h3>
+                            <div class="space-y-2">
+                                <div class="p-3 border rounded-md flex justify-between items-center"><span>Excel
+                                        Avanzado</span><button
+                                        class="text-sm px-3 py-1 bg-rb-orange text-white rounded-md">Inscribirse</button>
+                                </div>
+                                <div class="p-3 border rounded-md flex justify-between items-center"><span>Liderazgo
+                                        Efectivo</span><button
+                                        class="text-sm px-3 py-1 bg-rb-orange text-white rounded-md">Inscribirse</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-recruitment-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Reclutamiento y Selección</h2>
+                            <div class="flex space-x-4 mb-4">
+                                <button data-subview-target="hr-vacancy-request-view"
+                                    class="quick-access-btn-hr px-4 py-2 bg-rb-blue-main text-white rounded-md">Solicitar
+                                    Nueva Vacante</button>
+                                <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md">Base de
+                                    Candidatos</button>
+                            </div>
+                            <h3 class="font-semibold text-gray-700 mb-2">Vacantes Internas Activas</h3>
+                            <div class="space-y-2">
+                                <div class="p-3 border rounded-md">
+                                    <p class="font-semibold">Analista de Impuestos</p>
+                                    <p class="text-sm text-gray-500">Publicado: 18/06/2024</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-communications-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Comunicaciones Internas de RRHH</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">Nueva política de trabajo remoto</h3>
+                                    <p class="text-sm text-gray-500">Publicado: 15/06/2024</p>
+                                    <p class="mt-1 text-gray-600 text-sm">Hemos actualizado nuestra política de trabajo
+                                        remoto para ofrecer mayor flexibilidad. Consulta el documento completo en la
+                                        sección de Gestión Documental.</p>
+                                </div>
+                                <div class="pt-4 border-t">
+                                    <h3 class="font-semibold text-gray-700">Buzón de Sugerencias</h3>
+                                    <p class="text-sm text-gray-500 mb-2">¿Tienes una idea para mejorar? ¡Compártela!
+                                    </p>
+                                    <textarea class="w-full p-2 border rounded-md" rows="3"
+                                        placeholder="Escribe tu sugerencia o queja anónima aquí..."></textarea>
+                                    <button class="mt-2 px-4 py-2 bg-rb-purple text-white rounded-md">Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-wellbeing-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Bienestar y Clima Laboral</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="p-4 bg-rb-teal/10 rounded-lg">
+                                    <h3 class="font-semibold text-rb-teal mb-2">Encuesta de Clima Organizacional</h3>
+                                    <p class="text-sm text-gray-600 mb-3">Tu opinión es importante. La encuesta de este
+                                        semestre ya está disponible.</p>
+                                    <button class="px-4 py-2 bg-rb-teal text-white rounded-md">Participar</button>
+                                </div>
+                                <div class="p-4 bg-rb-orange/10 rounded-lg">
+                                    <h3 class="font-semibold text-rb-orange mb-2">Programa de Reconocimiento</h3>
+                                    <p class="text-sm text-gray-600 mb-3">Nomina a un compañero que haya demostrado un
+                                        desempeño excepcional.</p>
+                                    <button class="px-4 py-2 bg-rb-orange text-white rounded-md">Nominar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-reports-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Reportes y Analítica de RRHH</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                    <p class="text-sm text-gray-500">Rotación (YTD)</p>
+                                    <p class="text-3xl font-bold text-rb-orange">5.2%</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                    <p class="text-sm text-gray-500">Ausentismo (Mes)</p>
+                                    <p class="text-3xl font-bold text-rb-purple">1.8%</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                    <p class="text-sm text-gray-500">Desempeño Promedio</p>
+                                    <p class="text-3xl font-bold text-rb-teal">4.1/5</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-700 mb-2">Exportar Datos</h3>
+                                <div class="flex space-x-2">
+                                    <button class="flex items-center px-4 py-2 bg-green-600 text-white rounded-md"><span
+                                            class="material-symbols-outlined mr-2 text-sm">receipt_long</span> Exportar
+                                        a Excel</button>
+                                    <button class="flex items-center px-4 py-2 bg-red-600 text-white rounded-md"><span
+                                            class="material-symbols-outlined mr-2 text-sm">picture_as_pdf</span>
+                                        Exportar a PDF</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="hr-termination-view" class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Terminación de Personal</h2>
+                            <form id="termination-form" class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div><label class="block text-sm">Nombre del Empleado</label><input type="text"
+                                            class="mt-1 w-full p-2 border rounded-md"></div>
+                                    <div><label class="block text-sm">Último Día de Trabajo</label><input type="date"
+                                            class="mt-1 w-full p-2 border rounded-md"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm">Motivo</label>
+                                    <textarea rows="3" class="mt-1 w-full p-2 border rounded-md"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold">Devolución de Activos</label>
+                                    <div id="asset-checklist" class="mt-2 space-y-2">
+                                        <label class="flex items-center"><input type="checkbox" data-asset="Portátil"
+                                                class="h-4 w-4 rounded border-gray-300 text-rb-cyan focus:ring-rb-cyan">
+                                            <span class="ml-2">Portátil</span></label>
+                                        <label class="flex items-center"><input type="checkbox" data-asset="Teléfono"
+                                                class="h-4 w-4 rounded border-gray-300 text-rb-cyan focus:ring-rb-cyan">
+                                            <span class="ml-2">Teléfono</span></label>
+                                        <label class="flex items-center"><input type="checkbox"
+                                                data-asset="Tarjeta de Identificación"
+                                                class="h-4 w-4 rounded border-gray-300 text-rb-cyan focus:ring-rb-cyan">
+                                            <span class="ml-2">Tarjeta de Identificación</span></label>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-rb-blue-main text-white rounded-md hover:bg-rb-cyan">Procesar
+                                        Terminación</button>
+                                    <button id="generate-pazysalvo-btn" type="button"
+                                        class="px-6 py-2 bg-rb-teal text-white rounded-md hover:bg-rb-teal/80">Generar
+                                        Paz y Salvo</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="hr-performance-evaluation-view"
+                            class="hr-sub-view bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold text-rb-blue-main mb-4">Evaluación de Desempeño 360°</h2>
+                            <div class="space-y-6">
+                                <!-- Autoevaluación -->
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">Autoevaluación</h3>
+                                    <p class="text-sm text-gray-500 mb-2">Evalúe su propio desempeño en el último
+                                        período.</p>
+                                    <button
+                                        class="px-4 py-2 text-sm bg-rb-cyan text-white rounded-md hover:bg-rb-cyan/80">Iniciar
+                                        Autoevaluación</button>
+                                </div>
+                                <!-- Evaluación por Pares -->
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">Evaluación por Pares</h3>
+                                    <p class="text-sm text-gray-500 mb-2">Evalúe a sus compañeros de equipo.</p>
+                                    <button
+                                        class="px-4 py-2 text-sm bg-rb-purple text-white rounded-md hover:bg-rb-purple/80">Evaluar
+                                        a Pares</button>
+                                </div>
+                                <!-- Evaluación Jerárquica -->
+                                <div>
+                                    <h3 class="font-semibold text-gray-700">Evaluación Jerárquica</h3>
+                                    <p class="text-sm text-gray-500 mb-2">Proporcione retroalimentación a sus superiores
+                                        y/o evalúe a su equipo.</p>
+                                    <div class="flex space-x-4">
+                                        <button
+                                            class="px-4 py-2 text-sm bg-rb-orange text-white rounded-md hover:bg-rb-orange/80">Evaluación
+                                            Ascendente</button>
+                                        <button
+                                            class="px-4 py-2 text-sm bg-rb-teal text-white rounded-md hover:bg-rb-teal/80 team-evaluation-btn">Evaluación
+                                            de Equipo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Management View -->
+            <div id="docs-view" class="app-view hidden">
+                <h2 class="text-2xl font-bold text-rb-blue-main mb-6">Gestión Documental</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Documentos Frecuentes</h3>
+                            <div class="space-y-3">
+                                <a href="#" class="flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                                    <span class="material-symbols-outlined text-rb-purple mr-3">download</span> RUT de
+                                    la empresa
+                                </a>
+                                <a href="#" class="flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                                    <span class="material-symbols-outlined text-rb-purple mr-3">download</span>
+                                    Certificado Cámara de Comercio
+                                </a>
+                                <a href="#" class="flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100">
+                                    <span class="material-symbols-outlined text-rb-purple mr-3">download</span>
+                                    Certificado Bancario
+                                </a>
+                            </div>
+                        </div>
+                        <div id="docs-upload-view" class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Cargar Nuevo Documento</h3>
+                            <form class="space-y-4">
+                                <div><label class="block text-sm">Nombre del Documento</label><input type="text"
+                                        class="mt-1 w-full p-2 border rounded-md"></div>
+                                <div><label class="block text-sm">Categoría</label><select
+                                        class="mt-1 w-full p-2 border rounded-md">
+                                        <option>Financiero</option>
+                                        <option>Legal</option>
+                                        <option>RRHH</option>
+                                        <option>Cliente</option>
+                                    </select></div>
+                                <div><label class="block text-sm">Archivo</label><input type="file"
+                                        class="mt-1 w-full text-sm"></div>
+                                <button type="submit"
+                                    class="px-6 py-2 bg-rb-blue-main text-white rounded-md hover:bg-rb-cyan">Cargar</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Biblioteca de Documentos</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="bg-gray-50 text-gray-600">
+                                        <tr>
+                                            <th class="p-2">Documento</th>
+                                            <th class="p-2">Categoría</th>
+                                            <th class="p-2">Modificado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b">
+                                            <td class="p-2">Contrato Cliente A</td>
+                                            <td class="p-2">Cliente</td>
+                                            <td class="p-2">15/06/2024</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="p-2">Política de Vacaciones</td>
+                                            <td class="p-2">RRHH</td>
+                                            <td class="p-2">10/05/2024</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="p-2">Balance General 2023</td>
+                                            <td class="p-2">Financiero</td>
+                                            <td class="p-2">01/03/2024</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Solicitud de Mensajería</h3>
+                            <form class="space-y-4">
+                                <div><label class="block text-sm">Dirección de Recogida</label><input type="text"
+                                        class="mt-1 w-full p-2 border rounded-md"></div>
+                                <div><label class="block text-sm">Dirección de Entrega</label><input type="text"
+                                        class="mt-1 w-full p-2 border rounded-md"></div>
+                                <div><label class="block text-sm">Descripción del Paquete</label><textarea rows="2"
+                                        class="mt-1 w-full p-2 border rounded-md"></textarea></div>
+                                <button type="submit"
+                                    class="px-6 py-2 bg-rb-blue-main text-white rounded-md hover:bg-rb-cyan">Solicitar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicators View -->
+            <div id="indicators-view" class="app-view hidden">
+                <h2 class="text-2xl font-bold text-rb-blue-main mb-6">Mis Indicadores de Desempeño</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="font-semibold text-gray-700">Oportunidad</h3>
+                        <p class="text-sm text-gray-500 mb-3">Entrega de tareas a tiempo</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div class="bg-rb-cyan h-4 rounded-full" style="width: 95%"></div>
+                        </div>
+                        <p class="text-right text-lg font-bold mt-2 text-rb-cyan">95%</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="font-semibold text-gray-700">Calidad</h3>
+                        <p class="text-sm text-gray-500 mb-3">Tareas completadas sin errores</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div class="bg-rb-teal h-4 rounded-full" style="width: 88%"></div>
+                        </div>
+                        <p class="text-right text-lg font-bold mt-2 text-rb-teal">88%</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="font-semibold text-gray-700">Planificación</h3>
+                        <p class="text-sm text-gray-500 mb-3">Cumplimiento de la planificación</p>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div class="bg-rb-orange h-4 rounded-full" style="width: 92%"></div>
+                        </div>
+                        <p class="text-right text-lg font-bold mt-2 text-rb-orange">92%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin View -->
+            <div id="admin-view" class="app-view hidden">
+                <h2 class="text-2xl font-bold text-rb-blue-main mb-6">Panel de Administración</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Solicitudes de Vacantes</p>
+                            <p class="text-3xl font-bold text-rb-orange">3</p>
+                        </div>
+                        <span class="material-symbols-outlined text-4xl text-rb-orange/50">work</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Nuevas Contrataciones</p>
+                            <p class="text-3xl font-bold text-rb-cyan">1</p>
+                        </div>
+                        <span class="material-symbols-outlined text-4xl text-rb-cyan/50">person_add</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Terminaciones Pendientes</p>
+                            <p class="text-3xl font-bold text-rb-purple">0</p>
+                        </div>
+                        <span class="material-symbols-outlined text-4xl text-rb-purple/50">person_remove</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal for AI Results and other notifications -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-3xl w-full">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 id="modal-title" class="text-lg font-bold text-rb-blue-main">Resultado</h3>
+                <button id="modal-close-btn"
+                    class="text-gray-500 hover:text-gray-800 text-2xl leading-none">&times;</button>
+            </div>
+            <div id="modal-body" class="p-6 max-h-[80vh] overflow-y-auto">
+            </div>
+        </div>
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+
+
+</html>
